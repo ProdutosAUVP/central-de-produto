@@ -1,6 +1,6 @@
 import React from "react";
 import { useBrand } from "@/contexts/BrandContext";
-import { cn } from "@/lib/utils";
+import { cn, publicUrl } from "@/lib/utils";
 import { Star, AlertTriangle, ArrowDown, Download, FileImage, FileText } from "lucide-react";
 
 const GITHUB_RAW = "https://raw.githubusercontent.com/armandocustodio-ds/designsystemauvp/main";
@@ -142,22 +142,22 @@ export function MarcaLogos() {
         <p className="text-muted-foreground mb-6">O olho é o símbolo da marca AUVP. Use a versão adequada conforme o fundo.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="border border-neutral-200 rounded-xl p-10 flex flex-col items-center justify-center bg-neutral-100">
-            <img src="/olho-preto.svg" alt="Olho Preto" className="h-16 mb-4" />
+            <img src={publicUrl("/olho-preto.svg")} alt="Olho Preto" className="h-16 mb-4" />
             <span className="text-sm font-bold text-neutral-900 mb-1">Olho Preto</span>
             <span className="text-xs text-neutral-500">Para fundos claros</span>
-            <DownloadButtons src="/olho-preto.svg" filename="olho-preto" />
+            <DownloadButtons src={publicUrl("/olho-preto.svg")} filename="olho-preto" />
           </div>
           <div className="border border-neutral-800 rounded-xl p-10 flex flex-col items-center justify-center bg-neutral-900">
-            <img src="/olho-branco.svg" alt="Olho Branco" className="h-16 mb-4" />
+            <img src={publicUrl("/olho-branco.svg")} alt="Olho Branco" className="h-16 mb-4" />
             <span className="text-sm font-bold text-neutral-100 mb-1">Olho Branco</span>
             <span className="text-xs text-neutral-400">Para fundos escuros</span>
-            <DownloadButtons src="/olho-branco.svg" filename="olho-branco" dark />
+            <DownloadButtons src={publicUrl("/olho-branco.svg")} filename="olho-branco" dark />
           </div>
           <div className="border border-neutral-800 rounded-xl p-10 flex flex-col items-center justify-center bg-neutral-900">
-            <img src="/olho-amarelo.svg" alt="Olho Amarelo" className="h-16 mb-4" />
+            <img src={publicUrl("/olho-amarelo.svg")} alt="Olho Amarelo" className="h-16 mb-4" />
             <span className="text-sm font-bold text-neutral-100 mb-1">Olho Amarelo</span>
             <span className="text-xs text-neutral-400">Identidade AUVP Escola</span>
-            <DownloadButtons src="/olho-amarelo.svg" filename="olho-amarelo" dark />
+            <DownloadButtons src={publicUrl("/olho-amarelo.svg")} filename="olho-amarelo" dark />
           </div>
         </div>
       </div>

@@ -76,7 +76,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
+import { cn, publicUrl } from "@/lib/utils";
 import { useBrand } from "@/contexts/BrandContext";
 
 import {
@@ -455,7 +455,7 @@ export default function DesignSystemPage() {
                       brand === "capital" ? "bg-brand-dark" : "bg-brand"
                     )}>
                       <img
-                        src={brand === "capital" ? "/olho-branco.svg" : "/olho-preto.svg"}
+                        src={brand === "capital" ? publicUrl("/olho-branco.svg") : publicUrl("/olho-preto.svg")}
                         alt="AUVP Logo"
                         className="h-5 w-5"
                       />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn, publicUrl } from "@/lib/utils";
 import { useBrand } from "@/contexts/BrandContext";
 import {
   DropdownMenu,
@@ -63,7 +63,7 @@ export function GlobalNav() {
         )}
       >
         <img
-          src={brand === "capital" ? "/olho-branco.svg" : "/olho-preto.svg"}
+          src={brand === "capital" ? publicUrl("/olho-branco.svg") : publicUrl("/olho-preto.svg")}
           alt="AUVP Logo"
           className="h-5 w-5 md:h-7 md:w-7"
         />
