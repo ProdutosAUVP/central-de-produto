@@ -10,7 +10,8 @@ import {
   BarChart3, DollarSign, CreditCard, Shield, Award, Plane,
   Lock, Eye, EyeOff
 } from "lucide-react";
-import { cn, publicUrl } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { olhoBranco } from "@/assets/olhos";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -173,7 +174,7 @@ export default function TomEVozPage() {
         <div className="w-full max-w-sm">
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-center justify-center h-14 w-14 rounded-2xl bg-brand-dark mb-4">
-              <img src={publicUrl("/olho-branco.svg")} alt="AUVP Logo" className="h-9 w-9" />
+              <img src={olhoBranco.url} alt="AUVP Logo" className="h-9 w-9" />
             </div>
             <h1 className="text-xl font-bold font-anek text-foreground">Manual de Tom e Voz</h1>
             <p className="text-sm text-muted-foreground mt-1">Conteúdo restrito — insira a senha para acessar.</p>

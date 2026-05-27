@@ -1,6 +1,7 @@
 import React from "react";
 import { useBrand } from "@/contexts/BrandContext";
-import { cn, publicUrl } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { olhoBranco, olhoPreto, olhoAmarelo, downloadSvgBlob, downloadPngFromSvg } from "@/assets/olhos";
 import { Star, AlertTriangle, ArrowDown, Download, FileImage, FileText } from "lucide-react";
 
 const GITHUB_RAW = "https://raw.githubusercontent.com/armandocustodio-ds/designsystemauvp/main";
@@ -18,7 +19,9 @@ interface LogoCardProps {
   darkBg?: boolean;
 }
 
-async function downloadSvg(src: string, filename: string) {
+// ─── Downloads via fetch (para logos externos no GitHub RAW) ────────────────
+
+async function downloadSvgFetch(src: string, filename: string) {
   try {
     const resp = await fetch(src);
     if (!resp.ok) throw new Error("fetch failed");
@@ -36,7 +39,7 @@ async function downloadSvg(src: string, filename: string) {
   }
 }
 
-async function downloadPng(src: string, filename: string) {
+async function downloadPngFetch(src: string, filename: string) {
   try {
     const resp = await fetch(src);
     const svgText = await resp.text();
@@ -83,6 +86,8 @@ async function downloadPdf(src: string, filename: string) {
   }
 }
 
+// ─── Botões de download para logos externos (fetch) ─────────────────────────
+
 function DownloadButtons({ src, filename, dark = false }: { src: string; filename: string; dark?: boolean }) {
   const btnClass = dark
     ? "text-neutral-300 hover:text-neutral-100 border-neutral-700 hover:border-neutral-500"
@@ -91,14 +96,14 @@ function DownloadButtons({ src, filename, dark = false }: { src: string; filenam
   return (
     <div className="flex items-center gap-1.5 mt-3">
       <button
-        onClick={() => downloadSvg(src, filename)}
+        onClick={() => downloadSvgFetch(src, filename)}
         className={cn("flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border transition-colors", btnClass)}
         title="Baixar SVG"
       >
         <Download className="h-3 w-3" /> SVG
       </button>
       <button
-        onClick={() => downloadPng(src, filename)}
+        onClick={() => downloadPngFetch(src, filename)}
         className={cn("flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border transition-colors", btnClass)}
         title="Baixar PNG"
       >
@@ -106,6 +111,45 @@ function DownloadButtons({ src, filename, dark = false }: { src: string; filenam
       </button>
       <button
         onClick={() => downloadPdf(src, filename)}
+        className={cn("flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border transition-colors", btnClass)}
+        title="Baixar PDF"
+      >
+        <FileText className="h-3 w-3" /> PDF
+      </button>
+    </div>
+  );
+}
+
+// ─── Botões de download para olhos (blob local, sem fetch) ──────────────────
+
+function OlhoDownloadButtons({ svgRaw, svgUrl, filename, dark = false }: {
+  svgRaw: string;
+  svgUrl: string;
+  filename: string;
+  dark?: boolean;
+}) {
+  const btnClass = dark
+    ? "text-neutral-300 hover:text-neutral-100 border-neutral-700 hover:border-neutral-500"
+    : "text-neutral-500 hover:text-neutral-900 border-neutral-300 hover:border-neutral-500";
+
+  return (
+    <div className="flex items-center gap-1.5 mt-3">
+      <button
+        onClick={() => downloadSvgBlob(svgRaw, filename)}
+        className={cn("flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border transition-colors", btnClass)}
+        title="Baixar SVG"
+      >
+        <Download className="h-3 w-3" /> SVG
+      </button>
+      <button
+        onClick={() => downloadPngFromSvg(svgRaw, filename)}
+        className={cn("flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border transition-colors", btnClass)}
+        title="Baixar PNG"
+      >
+        <FileImage className="h-3 w-3" /> PNG
+      </button>
+      <button
+        onClick={() => downloadPdf(svgUrl, filename)}
         className={cn("flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border transition-colors", btnClass)}
         title="Baixar PDF"
       >
@@ -142,22 +186,22 @@ export function MarcaLogos() {
         <p className="text-muted-foreground mb-6">O olho é o símbolo da marca AUVP. Use a versão adequada conforme o fundo.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="border border-neutral-200 rounded-xl p-10 flex flex-col items-center justify-center bg-neutral-100">
-            <img src={publicUrl("/olho-preto.svg")} alt="Olho Preto" className="h-16 mb-4" />
+            <img src={olhoPreto.url} alt="Olho Preto" className="h-16 mb-4" />
             <span className="text-sm font-bold text-neutral-900 mb-1">Olho Preto</span>
             <span className="text-xs text-neutral-500">Para fundos claros</span>
-            <DownloadButtons src={publicUrl("/olho-preto.svg")} filename="olho-preto" />
+            <OlhoDownloadButtons svgRaw={olhoPreto.raw} svgUrl={olhoPreto.url} filename="olho-preto" />
           </div>
           <div className="border border-neutral-800 rounded-xl p-10 flex flex-col items-center justify-center bg-neutral-900">
-            <img src={publicUrl("/olho-branco.svg")} alt="Olho Branco" className="h-16 mb-4" />
+            <img src={olhoBranco.url} alt="Olho Branco" className="h-16 mb-4" />
             <span className="text-sm font-bold text-neutral-100 mb-1">Olho Branco</span>
             <span className="text-xs text-neutral-400">Para fundos escuros</span>
-            <DownloadButtons src={publicUrl("/olho-branco.svg")} filename="olho-branco" dark />
+            <OlhoDownloadButtons svgRaw={olhoBranco.raw} svgUrl={olhoBranco.url} filename="olho-branco" dark />
           </div>
           <div className="border border-neutral-800 rounded-xl p-10 flex flex-col items-center justify-center bg-neutral-900">
-            <img src={publicUrl("/olho-amarelo.svg")} alt="Olho Amarelo" className="h-16 mb-4" />
+            <img src={olhoAmarelo.url} alt="Olho Amarelo" className="h-16 mb-4" />
             <span className="text-sm font-bold text-neutral-100 mb-1">Olho Amarelo</span>
             <span className="text-xs text-neutral-400">Identidade AUVP Escola</span>
-            <DownloadButtons src={publicUrl("/olho-amarelo.svg")} filename="olho-amarelo" dark />
+            <OlhoDownloadButtons svgRaw={olhoAmarelo.raw} svgUrl={olhoAmarelo.url} filename="olho-amarelo" dark />
           </div>
         </div>
       </div>
